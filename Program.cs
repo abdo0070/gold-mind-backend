@@ -6,12 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer("Server=ABDO;Database=newdb;Trusted_Connection=True;TrustServerCertificate=True;"));
+var DB_URI = builder.Configuration.GetConnectionString("DB_URI");
+builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(DB_URI));
 
 var app = builder.Build();
 

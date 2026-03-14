@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GoldenMind.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GoldenMind.Controllers
@@ -15,8 +16,13 @@ namespace GoldenMind.Controllers
         [HttpGet]
         public async Task<IActionResult> DoctorUsers()
         {
-            var users = await _context.doctors.Include(doctor => doctor.patients).ToListAsync();
-            return Ok(users);
+            List<DoctorModel> data = new List<DoctorModel>();
+            var res = new
+            {
+                doctors = data,
+                msg = "SUCCESS"
+            };
+            return Ok(res);
         }
     }
 }
