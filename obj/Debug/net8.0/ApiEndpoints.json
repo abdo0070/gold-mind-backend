@@ -27,8 +27,24 @@
   },
   {
     "ContainingType": "GoldenMind.Controllers.DoctorContoller",
-    "Method": "GetDoctorPatient",
+    "Method": "GetById",
     "RelativePath": "api/doctors/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "Method": "GetDoctorPatient",
+    "RelativePath": "api/doctors/patients/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

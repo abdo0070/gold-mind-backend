@@ -33,14 +33,35 @@ namespace GoldenMind.Controllers
         {
             await _context.doctors.AddAsync(doctor);
             await _context.SaveChangesAsync();
-            return Ok();
+            return CreatedAtAction("GetById", new {id = doctor.Id},doctor);
         }
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetDoctorPatient(int id)
+        [Route("patients/{id:int}")]
+        public async Task<IActionResult> GetDoctorPatient([FromRoute]int id)
         {
             var patients = await _context.users.Where(u => u.DoctorId == id).ToListAsync();
             return Ok(patients);
         }
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute]int id)
+        {
+            var doctor = await _context.doctors.FindAsync(id);
+            return Ok(doctor);
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Remove(int id)
+        {
+            var doctor = await _context.doctors.FindAsync(id);
+            if(doctor != null)
+            {
+                _context.doctors.Remove(doctor);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            return NotFound();
+        }
+
     }
 }
