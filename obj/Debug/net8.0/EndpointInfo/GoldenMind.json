@@ -90,6 +90,27 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "DoctorContoller"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/users": {
@@ -162,15 +183,16 @@
         }
       }
     },
-    "/api/users/id": {
+    "/api/users/{Id}": {
       "get": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
+            "name": "Id",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -182,7 +204,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/users/id": {
       "delete": {
         "tags": [
           "User"

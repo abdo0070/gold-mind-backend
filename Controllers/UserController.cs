@@ -29,16 +29,22 @@ namespace GoldenMind.Controllers
             newUser.Doctor = doctor;
 
             _context.users.Add(newUser);
-           
-            // await _context.SaveChangesAsync();
+
+            await _context.SaveChangesAsync();
 
             return Ok(newUser);
         }
-        [HttpGet("id")]
-        public async Task<IActionResult> getSingleUser(int id)
+        [HttpGet()]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetSingleUser(int Id)
         {
-            var user = await _context.users.FindAsync(id);
-            return Ok(user);
+            var user = await _context.users.FindAsync(Id);
+            return Ok(new
+            {
+                data = user,
+                Msg = "SUCCESS",
+                STATUS_CODE = 200
+            });
         }
         [HttpPut]
         public async Task<IActionResult> Update(User reqUser)
@@ -48,14 +54,14 @@ namespace GoldenMind.Controllers
         [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
         {
-                var user = await _context.users.FindAsync(id);
-                if(user != null)
-                {
+            var user = await _context.users.FindAsync(id);
+            if (user != null)
+            {
                 _context.users.Remove(user);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
-                return NotFound("The User Does Not Exist");
+            return NotFound("The User Does Not Exist");
         }
 
     }

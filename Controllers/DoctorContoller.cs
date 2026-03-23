@@ -46,7 +46,8 @@ namespace GoldenMind.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute]int id)
         {
-            var doctor = await _context.doctors.FindAsync(id);
+            var doctor = _context.doctors.Where(d => d.Id == id)
+                .Include(d => d.patients);
             return Ok(doctor);
         }
         [HttpDelete]
@@ -57,6 +58,7 @@ namespace GoldenMind.Controllers
             if(doctor != null)
             {
                 _context.doctors.Remove(doctor);
+                //_context.Entry(doctor).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
