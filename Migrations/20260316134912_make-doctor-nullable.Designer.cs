@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoldenMind.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20260215130229_doctor_table")]
-    partial class doctor_table
+    [Migration("20260316134912_make-doctor-nullable")]
+    partial class makedoctornullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace GoldenMind.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GoldenMind.Models.DoctorsModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.DoctorModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace GoldenMind.Migrations
                     b.ToTable("doctors");
                 });
 
-            modelBuilder.Entity("GoldenMind.Models.UsersModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,9 +58,6 @@ namespace GoldenMind.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DoctorsModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -81,19 +78,23 @@ namespace GoldenMind.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorsModelId");
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("GoldenMind.Models.UsersModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.User", b =>
                 {
-                    b.HasOne("GoldenMind.Models.DoctorsModel", null)
+                    b.HasOne("GoldenMind.Models.DoctorModel", "Doctor")
                         .WithMany("patients")
-                        .HasForeignKey("DoctorsModelId");
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("GoldenMind.Models.DoctorsModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.DoctorModel", b =>
                 {
                     b.Navigation("patients");
                 });

@@ -25,9 +25,14 @@ namespace GoldenMind.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(User newUser)
         {
-            await _context.AddAsync(newUser);
-            await _context.SaveChangesAsync();
-            return Ok();
+            var doctor = await _context.doctors.FindAsync(2);
+            newUser.Doctor = doctor;
+
+            _context.users.Add(newUser);
+           
+            // await _context.SaveChangesAsync();
+
+            return Ok(newUser);
         }
         [HttpGet("id")]
         public async Task<IActionResult> getSingleUser(int id)

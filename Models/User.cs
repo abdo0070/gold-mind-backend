@@ -16,7 +16,7 @@ namespace GoldenMind.Models
         [Required]
         public string Username { get; set; }
         public int DoctorId { get; set; }
-        public DoctorModel Doctor { get; set; }
+        public DoctorModel ? Doctor { get; set; }
 
     }
 }
