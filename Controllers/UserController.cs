@@ -43,7 +43,6 @@ namespace GoldenMind.Controllers
             {
                 data = user,
                 Msg = "SUCCESS",
-                STATUS_CODE = 200
             });
         }
         [HttpPut]
