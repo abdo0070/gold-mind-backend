@@ -1,6 +1,38 @@
 [
   {
-    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "ContainingType": "GoldenMind.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/caregaver/auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "authData",
+        "Type": "GoldenMind.Dto.UserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/caregaver/auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "authData",
+        "Type": "GoldenMind.Dto.UserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
     "Method": "DoctorUsers",
     "RelativePath": "api/doctors",
     "HttpMethod": "GET",
@@ -10,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
     "Method": "Create",
     "RelativePath": "api/doctors",
     "HttpMethod": "POST",
@@ -26,7 +58,23 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
+    "Method": "Update",
+    "RelativePath": "api/doctors",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newDoctor",
+        "Type": "GoldenMind.Models.DoctorModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
     "Method": "GetById",
     "RelativePath": "api/doctors/{id}",
     "HttpMethod": "GET",
@@ -42,7 +90,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
     "Method": "Remove",
     "RelativePath": "api/doctors/{id}",
     "HttpMethod": "DELETE",
@@ -58,7 +106,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.DoctorContoller",
+    "ContainingType": "GoldenMind.Controllers.DoctorController",
     "Method": "GetDoctorPatient",
     "RelativePath": "api/doctors/patients/{id}",
     "HttpMethod": "GET",
@@ -81,7 +129,17 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[GoldenMind.Dto.UserDto, GoldenMind, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "GoldenMind.Controllers.UserController",

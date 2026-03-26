@@ -7,15 +7,14 @@ namespace GoldenMind.Controllers
 {
     [ApiController]
     [Route("api/doctors")]
-    public class DoctorContoller : ControllerBase
+    public class DoctorController : ControllerBase
     {
         private AppDBContext _context;
-        public DoctorContoller(AppDBContext context) 
+        public DoctorController(AppDBContext context) 
         {
             _context = context;
         }
-        [HttpGet]
-        
+        [HttpGet] 
         public async Task<IActionResult> DoctorUsers()
         {
             var doctors = _context.doctors.ToList();
@@ -65,5 +64,10 @@ namespace GoldenMind.Controllers
             return NotFound();
         }
 
+        [HttpPut]
+        public async Task<IActionResult>Update(DoctorModel newDoctor)
+        {
+            return Ok();
+        }
     }
 }

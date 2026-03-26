@@ -1,4 +1,5 @@
-﻿using GoldenMind.Models;
+﻿using GoldenMind.Dto;
+using GoldenMind.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,20 @@ namespace GoldenMind.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult<List<UserDto>>> Index()
         {
             var users = await _context.users.ToListAsync();
-            return Ok(users);
+            List<UserDto> userDtos = new List<UserDto>();
+            foreach(var user in users) // O(n)
+            {
+                UserDto newUserDto = new UserDto();
+                newUserDto.Id = user.Id;
+                newUserDto.DoctorId = user.DoctorId;
+                newUserDto.Name = user.Name;
+                newUserDto.Email = user.Email;
+                userDtos.Add(newUserDto);
+            }
+            return userDtos;
         }
         [HttpPost]
         public async Task<IActionResult> Create(User newUser)
@@ -34,7 +45,7 @@ namespace GoldenMind.Controllers
 
             return Ok(newUser);
         }
-        [HttpGet()]
+        [HttpGet]
         [Route("{Id}")]
         public async Task<IActionResult> GetSingleUser(int Id)
         {
