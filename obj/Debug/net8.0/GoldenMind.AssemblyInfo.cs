@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GoldenMind")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ada8c80cd59f98b75d14ab6b89f4f7ca5cf3225")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8610f7f60ee38be6be154f7f4f1dc0ae4851b5e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("GoldenMind")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GoldenMind")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

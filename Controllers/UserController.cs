@@ -18,7 +18,7 @@ namespace GoldenMind.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UserDto>>> Index()
+        public async Task<IActionResult> Index()
         {
             var users = await _context.users.ToListAsync();
             List<UserDto> userDtos = new List<UserDto>();
@@ -31,7 +31,11 @@ namespace GoldenMind.Controllers
                 newUserDto.Email = user.Email;
                 userDtos.Add(newUserDto);
             }
-            return userDtos;
+            return Ok(new
+            {
+                Data = userDtos,
+                Msg = "Success"
+            });
         }
         [HttpPost]
         public async Task<IActionResult> Create(User newUser)
