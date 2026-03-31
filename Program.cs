@@ -1,5 +1,7 @@
 using GoldenMind;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using System.Net.NetworkInformation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +21,10 @@ builder.Services.AddControllers()
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://127.0.0.1:5500",
-                                "http://www.contoso.com");
-        });
+        options.AddDefaultPolicy(policy => {
+        policy.AllowAnyHeader()
+        .AllowAnyOrigin()
+        .AllowAnyMethod(); });
 });
 builder.Services.AddCors(opt =>
 {
@@ -33,6 +33,7 @@ builder.Services.AddCors(opt =>
         policy.AllowAnyOrigin().WithMethods("*").AllowAnyHeader();
     });
 });
+// JWT Bearer
 
 var app = builder.Build();
 app.UseCors();

@@ -42,11 +42,8 @@ namespace GoldenMind.Controllers
         {
             var doctor = await _context.doctors.FindAsync(2);
             newUser.Doctor = doctor;
-
             _context.users.Add(newUser);
-
             await _context.SaveChangesAsync();
-
             return Ok(newUser);
         }
         [HttpGet]
@@ -54,20 +51,25 @@ namespace GoldenMind.Controllers
         public async Task<IActionResult> GetSingleUser(int Id)
         {
             var user = await _context.users.FindAsync(Id);
+            UserDto userDto = new UserDto();
+            userDto.Id = user.Id;
+            userDto.DoctorId = user.DoctorId;
+            userDto.Name = user.Name;
+            user.Password = user.Password;
             return Ok(new
             {
-                data = user,
+                data = userDto,
                 Msg = "SUCCESS",
             });
         }
         [HttpPut]
-        public async Task<IActionResult> Update(User reqUser)
+        public async Task<IActionResult> Update(UserDto user)
         {
             return NoContent();
         }
         [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
-        {
+        {                               
             var user = await _context.users.FindAsync(id);
             if (user != null)
             {

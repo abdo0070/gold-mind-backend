@@ -156,8 +156,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "reqUser",
-        "Type": "GoldenMind.Models.User",
+        "Name": "user",
+        "Type": "GoldenMind.Dto.UserDto",
         "IsRequired": true
       }
     ],
