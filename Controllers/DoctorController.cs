@@ -23,7 +23,6 @@ namespace GoldenMind.Controllers
             var res = new
             {
                 doctors,
-                msg = "SUCCESS"
             };
             return Ok(res);
         }

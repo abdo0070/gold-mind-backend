@@ -1,5 +1,7 @@
 ﻿using GoldenMind.Dto;
+using GoldenMind.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace GoldenMind.Controllers
 {
@@ -7,14 +9,25 @@ namespace GoldenMind.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Login([FromBody]UserDto authData)
+        private AppDBContext _context;
+        public AuthController(AppDBContext context)
         {
-
-            return Ok(authData);
+            _context = context;
         }
         [HttpPost("register")]
-        public IActionResult Register([FromBody]UserDto authData)
+        public async Task<IActionResult> Register(User user)
+        {
+            if(ModelState.IsValid)
+            {
+                user.Doctor = null;
+                await _context.users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            return BadRequest(ModelState);
+        }
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]UserDto authData)
         {
             return Ok();
         }
