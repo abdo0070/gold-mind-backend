@@ -55,7 +55,6 @@ namespace GoldenMind.Controllers
             userDto.Id = user.Id;
             userDto.DoctorId = user.DoctorId;
             userDto.Name = user.Name;
-            user.Password = user.Password;
             return Ok(new
             {
                 data = userDto,

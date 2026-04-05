@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/caregaver/auth": {
+    "/api/caregaver/auth/register": {
       "post": {
         "tags": [
           "Auth"
@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/User"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/User"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/User"
               }
             }
           }
@@ -36,7 +36,7 @@
         }
       }
     },
-    "/api/caregaver/auth/register": {
+    "/api/caregaver/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -353,9 +353,7 @@
       },
       "User": {
         "required": [
-          "name",
-          "password",
-          "username"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -363,19 +361,60 @@
             "type": "integer",
             "format": "int32"
           },
-          "name": {
-            "minLength": 1,
-            "type": "string"
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "normalizedUserName": {
+            "type": "string",
+            "nullable": true
           },
           "email": {
             "type": "string",
             "nullable": true
           },
-          "password": {
-            "minLength": 1,
-            "type": "string"
+          "normalizedEmail": {
+            "type": "string",
+            "nullable": true
           },
-          "username": {
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumberConfirmed": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "lockoutEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lockoutEnabled": {
+            "type": "boolean"
+          },
+          "accessFailedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
             "minLength": 1,
             "type": "string"
           },

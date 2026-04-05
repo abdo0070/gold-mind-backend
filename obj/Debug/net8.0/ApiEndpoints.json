@@ -2,7 +2,7 @@
   {
     "ContainingType": "GoldenMind.Controllers.AuthController",
     "Method": "Login",
-    "RelativePath": "api/caregaver/auth",
+    "RelativePath": "api/caregaver/auth/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -24,8 +24,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "authData",
-        "Type": "GoldenMind.Dto.UserDto",
+        "Name": "user",
+        "Type": "GoldenMind.Models.User",
         "IsRequired": true
       }
     ],
