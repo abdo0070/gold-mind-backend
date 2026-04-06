@@ -1,5 +1,6 @@
 ﻿using GoldenMind.Dto;
 using GoldenMind.Models;
+using GoldenMind.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,28 +47,17 @@ namespace GoldenMind.Controllers
             User userDB = await _context.users.Include(u => u.Email == authData.Email).FirstOrDefaultAsync();
             if(userDB != null)
             {
-            // generate token 
+            // user claims
             List<Claim> userClaims = new List<Claim>();
                 userClaims.Add(new Claim(ClaimTypes.Email,userDB.Email));
                 userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userDB.Id.ToString()));
                 userClaims.Add(new Claim(ClaimTypes.Name, userDB.Name));
-                var TokenClaim = new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString());
-
-                // sign Credintails
-                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("sdfasfsafa"));
-                SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                userClaims.Add(TokenClaim);
-            JwtSecurityToken jWtSecurityToken = new JwtSecurityToken(
-                issuer: "",
-                audience: "",
-                expires: DateTime.Now.AddHours(1),
-                claims : userClaims,
-                signingCredentials : signingCredentials
-                );
-            return Ok(new
+                var TokenClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
+                // generete the token
+                var token = TokenProvider.GenerateToken(userClaims);
+                return Ok(new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(jWtSecurityToken),
-                expiry = jWtSecurityToken.ValidTo
+                token = token
             });
             }
             return BadRequest();
