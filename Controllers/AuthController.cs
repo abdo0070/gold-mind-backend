@@ -54,11 +54,13 @@ namespace GoldenMind.Controllers
                 userClaims.Add(new Claim(ClaimTypes.Name, userDB.Name));
                 var TokenClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
                 // generete the token
-                var token = TokenProvider.GenerateToken(userClaims);
+                var jwtSecurityToken = TokenProvider.GenerateSecurityToken(userClaims);
+                var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 return Ok(new
-            {
-                token = token
-            });
+                {
+                    token,
+                    expiry = jwtSecurityToken.ValidTo.Hour
+                });
             }
             return BadRequest();
         }

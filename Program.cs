@@ -1,7 +1,10 @@
 using GoldenMind;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Net.NetworkInformation;
+using System.Text;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +36,23 @@ builder.Services.AddCors(opt =>
         policy.AllowAnyOrigin().WithMethods("*").AllowAnyHeader();
     });
 });
-// JWT Bearer
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwtOpt =>
+{
+    jwtOpt.SaveToken = true;
+    jwtOpt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidIssuer = "",
+        ValidateAudience = true,
+        ValidAudience = "",
+        IssuerSigningKey = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes(""))
+    };
+});
 
 var app = builder.Build();
 app.UseCors();
@@ -43,6 +62,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 // Use Database => sql server
 app.UseHttpsRedirection();
 
