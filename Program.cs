@@ -1,4 +1,6 @@
 using GoldenMind;
+using GoldenMind.Auth;
+using GoldenMind.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,13 +17,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var DB_URI = builder.Configuration.GetConnectionString("DB_URI");
+
+//var jwtOptions = builder.Configuration.GetSection("JWT").Get<JwtBearerOptions>();
+
+var jwtOptions = builder.Configuration.GetSection("JWT").Get<JwtOptions>();
+builder.Services.AddSingleton<JwtOptions>(jwtOptions);
+var tokenProvider = new TokenProvider(jwtOptions);
+builder.Services.AddSingleton<TokenProvider>(tokenProvider);
 builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(DB_URI));
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     });
-
 builder.Services.AddCors(options =>
 {
         options.AddDefaultPolicy(policy => {
@@ -36,6 +44,7 @@ builder.Services.AddCors(opt =>
         policy.AllowAnyOrigin().WithMethods("*").AllowAnyHeader();
     });
 });
+// DEFINE THE AUTH JWT BEARER
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,10 +56,10 @@ builder.Services.AddAuthentication(opt =>
     jwtOpt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
     {
         ValidateIssuer = true,
-        ValidIssuer = "",
+        ValidIssuer = builder.Configuration["JWT:issuer"],
         ValidateAudience = true,
-        ValidAudience = "",
-        IssuerSigningKey = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes(""))
+        ValidAudience = builder.Configuration["JWT:audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]))
     };
 });
 
@@ -62,14 +71,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 // Use Database => sql server
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-
 app.MapControllers();
 
 app.Run(); 

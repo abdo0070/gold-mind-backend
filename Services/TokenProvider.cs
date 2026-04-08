@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using GoldenMind.Auth;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,15 +8,20 @@ namespace GoldenMind.Services
 {
     public class TokenProvider
     {
-        public static JwtSecurityToken GenerateSecurityToken(List<Claim> claims)
+        private readonly JwtOptions _jwtOptions;
+        public TokenProvider(JwtOptions jwtOptions)
+        {
+            _jwtOptions = jwtOptions;
+        }
+        public JwtSecurityToken GenerateSecurityToken(List<Claim> claims)
         {
             // SignCredentials
-            SymmetricSecurityKey key = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes("asfasfas"));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes(_jwtOptions.Key));
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             // Generete JwtSecurityToken 
             var jwtSecurityToken = new JwtSecurityToken(
-                issuer: "https://localhost:7080/",
-                audience: "https://localhost:7080/",
+                issuer: _jwtOptions.Issuer,
+                audience: _jwtOptions.Audience,
                 claims: null,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials : signingCredentials

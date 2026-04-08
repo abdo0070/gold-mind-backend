@@ -18,10 +18,12 @@ namespace GoldenMind.Controllers
     {
         private AppDBContext _context;
         private readonly UserManager<User> _userManager;
-        public AuthController(AppDBContext context,UserManager<User> userManager)
+        private readonly TokenProvider _tokenProvider;
+        public AuthController(AppDBContext context,UserManager<User> userManager,TokenProvider tokenProvider)
         {
             _userManager= userManager;
             _context = context;
+            _tokenProvider = tokenProvider;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register(User user)
@@ -54,7 +56,7 @@ namespace GoldenMind.Controllers
                 userClaims.Add(new Claim(ClaimTypes.Name, userDB.Name));
                 var TokenClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
                 // generete the token
-                var jwtSecurityToken = TokenProvider.GenerateSecurityToken(userClaims);
+                var jwtSecurityToken = _tokenProvider.GenerateSecurityToken(userClaims);
                 var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 return Ok(new
                 {
