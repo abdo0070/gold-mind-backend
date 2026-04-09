@@ -12,6 +12,7 @@ namespace GoldenMind.Models
         [Required]
         public string Name { get; set; }
         public int DoctorId { get; set; }
+        public ICollection<Alarms> ? alarms { get; set; }
         public DoctorModel ? Doctor { get; set; }
 
     }
