@@ -16,64 +16,26 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var DB_URI = builder.Configuration.GetConnectionString("DB_URI");
 
-//var jwtOptions = builder.Configuration.GetSection("JWT").Get<JwtBearerOptions>();
 
-var jwtOptions = builder.Configuration.GetSection("JWT").Get<JwtOptions>();
-builder.Services.AddSingleton<JwtOptions>(jwtOptions);
-var tokenProvider = new TokenProvider(jwtOptions);
-builder.Services.AddSingleton<TokenProvider>(tokenProvider);
-builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(DB_URI));
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-    });
-builder.Services.AddCors(options =>
-{
-        options.AddDefaultPolicy(policy => {
-        policy.AllowAnyHeader()
-        .AllowAnyOrigin()
-        .AllowAnyMethod(); });
-});
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("PublicPolicy", policy =>
-    {
-        policy.AllowAnyOrigin().WithMethods("*").AllowAnyHeader();
-    });
-});
-// DEFINE THE AUTH JWT BEARER
-builder.Services.AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(jwtOpt =>
-{
-    jwtOpt.SaveToken = true;
-    jwtOpt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["JWT:issuer"],
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["JWT:audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(UTF8Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"]))
-    };
-});
+builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DB_URI")));
+
+
 
 var app = builder.Build();
-app.UseCors();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// Use Database => sql server
+
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
+
 app.MapControllers();
 
-app.Run(); 
+app.Run();

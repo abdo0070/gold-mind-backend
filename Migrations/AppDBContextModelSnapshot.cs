@@ -17,12 +17,44 @@ namespace GoldenMind.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GoldenMind.Models.DoctorModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.Alarms", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CareGaverId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Discard")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Repeat")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CareGaverId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("alarms");
+                });
+
+            modelBuilder.Entity("GoldenMind.Models.CareGaver", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,16 +66,31 @@ namespace GoldenMind.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastActive")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("lastActive")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("Online")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("doctors");
+                    b.ToTable("careGavers");
                 });
 
             modelBuilder.Entity("GoldenMind.Models.User", b =>
@@ -54,12 +101,26 @@ namespace GoldenMind.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DoctorId")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<int>("CareGaverId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -69,31 +130,53 @@ namespace GoldenMind.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("CareGaverId");
 
-                    b.ToTable("users");
+                    b.ToTable("patiens");
+                });
+
+            modelBuilder.Entity("GoldenMind.Models.Alarms", b =>
+                {
+                    b.HasOne("GoldenMind.Models.CareGaver", "CareGaver")
+                        .WithMany()
+                        .HasForeignKey("CareGaverId");
+
+                    b.HasOne("GoldenMind.Models.User", "User")
+                        .WithMany("alarms")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CareGaver");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GoldenMind.Models.User", b =>
                 {
-                    b.HasOne("GoldenMind.Models.DoctorModel", "Doctor")
+                    b.HasOne("GoldenMind.Models.CareGaver", "careGaver")
                         .WithMany("patients")
-                        .HasForeignKey("DoctorId")
+                        .HasForeignKey("CareGaverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.Navigation("careGaver");
                 });
 
-            modelBuilder.Entity("GoldenMind.Models.DoctorModel", b =>
+            modelBuilder.Entity("GoldenMind.Models.CareGaver", b =>
                 {
                     b.Navigation("patients");
+                });
+
+            modelBuilder.Entity("GoldenMind.Models.User", b =>
+                {
+                    b.Navigation("alarms");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,13 +20,13 @@ namespace GoldenMind.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = await _context.users.ToListAsync();
+            var users = await _context.patiens.ToListAsync();
             List<UserDto> userDtos = new List<UserDto>();
-            foreach(var user in users) // O(n)
+            foreach (var user in users) // O(n)
             {
                 UserDto newUserDto = new UserDto();
                 newUserDto.Id = user.Id;
-                newUserDto.DoctorId = user.DoctorId;
+                newUserDto.CareGaverId = user.CareGaverId;
                 newUserDto.Name = user.Name;
                 newUserDto.Email = user.Email;
                 userDtos.Add(newUserDto);
@@ -40,9 +40,9 @@ namespace GoldenMind.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(User newUser)
         {
-            var doctor = await _context.doctors.FindAsync(2);
-            newUser.Doctor = doctor;
-            _context.users.Add(newUser);
+            var doctor = await _context.careGavers.FindAsync(2);
+            newUser.careGaver = doctor;
+            _context.patiens.Add(newUser);
             await _context.SaveChangesAsync();
             return Ok(newUser);
         }
@@ -50,10 +50,10 @@ namespace GoldenMind.Controllers
         [Route("{Id}")]
         public async Task<IActionResult> GetSingleUser(int Id)
         {
-            var user = await _context.users.FindAsync(Id);
+            var user = await _context.patiens.FindAsync(Id);
             UserDto userDto = new UserDto();
             userDto.Id = user.Id;
-            userDto.DoctorId = user.DoctorId;
+            userDto.CareGaverId = user.CareGaverId;
             userDto.Name = user.Name;
             return Ok(new
             {
@@ -68,11 +68,11 @@ namespace GoldenMind.Controllers
         }
         [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
-        {                               
-            var user = await _context.users.FindAsync(id);
+        {
+            var user = await _context.patiens.FindAsync(id);
             if (user != null)
             {
-                _context.users.Remove(user);
+                _context.patiens.Remove(user);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }

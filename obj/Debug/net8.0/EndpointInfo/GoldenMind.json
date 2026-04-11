@@ -86,17 +86,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             }
           }
@@ -115,17 +115,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DoctorModel"
+                "$ref": "#/components/schemas/CareGaver"
               }
             }
           }
@@ -322,7 +322,33 @@
   },
   "components": {
     "schemas": {
-      "DoctorModel": {
+      "Alarms": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "careGaver": {
+            "$ref": "#/components/schemas/CareGaver"
+          },
+          "repeat": {
+            "type": "boolean"
+          },
+          "discard": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CareGaver": {
         "type": "object",
         "properties": {
           "id": {
@@ -334,6 +360,21 @@
             "nullable": true
           },
           "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "online": {
+            "type": "boolean"
+          },
+          "education": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
             "type": "string",
             "nullable": true
           },
@@ -361,11 +402,19 @@
             "type": "integer",
             "format": "int32"
           },
-          "userName": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
             "type": "string",
             "nullable": true
           },
-          "normalizedUserName": {
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
             "type": "string",
             "nullable": true
           },
@@ -373,57 +422,31 @@
             "type": "string",
             "nullable": true
           },
-          "normalizedEmail": {
+          "education": {
             "type": "string",
             "nullable": true
           },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "passwordHash": {
-            "type": "string",
-            "nullable": true
-          },
-          "securityStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "concurrencyStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
+          "age": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "doctorId": {
+          "level": {
             "type": "integer",
             "format": "int32"
           },
-          "doctor": {
-            "$ref": "#/components/schemas/DoctorModel"
+          "careGaverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alarms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Alarms"
+            },
+            "nullable": true
+          },
+          "careGaver": {
+            "$ref": "#/components/schemas/CareGaver"
           }
         },
         "additionalProperties": false
@@ -443,7 +466,7 @@
             "type": "string",
             "nullable": true
           },
-          "doctorId": {
+          "careGaverId": {
             "type": "integer",
             "format": "int32"
           }

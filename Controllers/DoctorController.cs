@@ -12,16 +12,16 @@ namespace GoldenMind.Controllers
     public class DoctorController : ControllerBase
     {
         private AppDBContext _context;
-        public DoctorController(AppDBContext context) 
+        public DoctorController(AppDBContext context)
         {
             _context = context;
         }
-        [HttpGet] 
+        [HttpGet]
         public async Task<IActionResult> DoctorUsers()
         {
-            var doctors = _context.doctors.ToList();
+            var doctors = _context.careGavers.ToList();
 
-            List<DoctorModel> data = new List<DoctorModel>();
+            List<CareGaver> data = new List<CareGaver>();
             var res = new
             {
                 doctors,
@@ -29,44 +29,41 @@ namespace GoldenMind.Controllers
             return Ok(res);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(DoctorModel doctor)
+        public async Task<IActionResult> Create(CareGaver doctor)
         {
-            await _context.doctors.AddAsync(doctor);
+            await _context.careGavers.AddAsync(doctor);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetById", new {id = doctor.Id},doctor);
+            return CreatedAtAction("GetById", new { id = doctor.Id }, doctor);
         }
         [HttpGet]
         [Route("patients/{id:int}")]
-        public async Task<IActionResult> GetDoctorPatient([FromRoute]int id)
+        public async Task<IActionResult> GetDoctorPatient([FromRoute] int id)
         {
-            var patients = await _context.users.Where(u => u.DoctorId == id).ToListAsync();
+            var patients = await _context.patiens.Where(u => u.CareGaverId == id).ToListAsync();
             return Ok(patients);
         }
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute]int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var doctor = _context.doctors.Where(d => d.Id == id)
-                .Include(d => d.patients);
+            var doctor = _context.patiens.Where(d => d.Id == id)
+                .Include(d => d.CareGaverId);
             return Ok(doctor);
         }
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            var doctor = await _context.doctors.FindAsync(id);
-            if(doctor != null)
+            var doctor = await _context.patiens.FindAsync(id);
+            if (doctor != null)
             {
-                _context.doctors.Remove(doctor);
-                //_context.Entry(doctor).State = EntityState.Deleted;
-                await _context.SaveChangesAsync();
                 return NoContent();
             }
             return NotFound();
         }
 
         [HttpPut]
-        public async Task<IActionResult>Update(DoctorModel newDoctor)
+        public async Task<IActionResult> Update(CareGaver newDoctor)
         {
             return Ok();
         }

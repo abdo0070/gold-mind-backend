@@ -51,7 +51,7 @@
     "Parameters": [
       {
         "Name": "doctor",
-        "Type": "GoldenMind.Models.DoctorModel",
+        "Type": "GoldenMind.Models.CareGaver",
         "IsRequired": true
       }
     ],
@@ -67,7 +67,7 @@
     "Parameters": [
       {
         "Name": "newDoctor",
-        "Type": "GoldenMind.Models.DoctorModel",
+        "Type": "GoldenMind.Models.CareGaver",
         "IsRequired": true
       }
     ],

@@ -19,39 +19,39 @@ namespace GoldenMind.Controllers
         private AppDBContext _context;
         private readonly UserManager<User> _userManager;
         private readonly TokenProvider _tokenProvider;
-        public AuthController(AppDBContext context,UserManager<User> userManager,TokenProvider tokenProvider)
+        public AuthController(AppDBContext context, UserManager<User> userManager, TokenProvider tokenProvider)
         {
-            _userManager= userManager;
+            _userManager = userManager;
             _context = context;
             _tokenProvider = tokenProvider;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register(User user)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                user.Doctor = null;
+                user.careGaver = null;
                 IdentityResult result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                     return Ok("Created");
-                
-                foreach(var i in result.Errors)
+
+                foreach (var i in result.Errors)
                 {
-                    ModelState.AddModelError(i.Description,i.Description);
+                    ModelState.AddModelError(i.Description, i.Description);
                 }
             }
             return BadRequest(ModelState);
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]UserDto authData)
+        public async Task<IActionResult> Login([FromBody] UserDto authData)
         {
             // get the user from the DB
-            User userDB = await _context.users.Include(u => u.Email == authData.Email).FirstOrDefaultAsync();
-            if(userDB != null)
+            User userDB = await _context.patiens.Include(u => u.Email == authData.Email).FirstOrDefaultAsync();
+            if (userDB != null)
             {
-            // user claims
-            List<Claim> userClaims = new List<Claim>();
-                userClaims.Add(new Claim(ClaimTypes.Email,userDB.Email));
+                // user claims
+                List<Claim> userClaims = new List<Claim>();
+                userClaims.Add(new Claim(ClaimTypes.Email, userDB.Email));
                 userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userDB.Id.ToString()));
                 userClaims.Add(new Claim(ClaimTypes.Name, userDB.Name));
                 var TokenClaim = new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString());
@@ -67,6 +67,6 @@ namespace GoldenMind.Controllers
             return BadRequest();
         }
     }
-   
+
 
 }

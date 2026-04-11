@@ -5,19 +5,12 @@ namespace GoldenMind
 {
     public class AppDBContext : DbContext
     {
-        public AppDBContext(DbContextOptions options) : base(options)
+        public AppDBContext(DbContextOptions opt) : base(opt)
         {
         }
-        public DbSet<User> users { get; set; }
-        public DbSet<DoctorModel> doctors { get; set; }
+        public DbSet<User> patiens { get; set; }
+        public DbSet<CareGaver> careGavers { get; set; }
+        public DbSet<Alarms> alarms { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>()
-                .HasOne(d => d.Doctor)
-                .WithMany(u => u.patients)
-                .HasForeignKey(u => u.DoctorId);
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }

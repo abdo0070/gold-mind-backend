@@ -1,6 +1,6 @@
 ﻿namespace GoldenMind.Models
 {
-    public class DoctorModel
+    public class CareGaver
     {
         public int Id { set; get; } 
         public string Name { set; get; }

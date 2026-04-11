@@ -1,6 +1,6 @@
 ﻿namespace GoldenMind.Dto
 {
-    public class DoctorPatientsDTO
+    public class CareGaverPatientsDto
     {
         public int Id { get; set; }
         public int PatientCount {  get; set; }
