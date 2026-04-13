@@ -1,5 +1,79 @@
 [
   {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "GetSingleAlarm",
+    "RelativePath": "{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "GetAllAlarms",
+    "RelativePath": "api/alarms",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "CreateAlarm",
+    "RelativePath": "api/alarms",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "alarmDto",
+        "Type": "GoldenMind.Dto.AlarmDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "Update",
+    "RelativePath": "api/alarms",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "alarmsDto",
+        "Type": "GoldenMind.Dto.AlarmDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "Delete",
+    "RelativePath": "api/alarms",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GoldenMind.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/caregaver/auth/login",
