@@ -9,7 +9,7 @@
         public bool Online { set; get; } = false;
         public string Education { set; get; }
         public string Phone { set; get; }
-        public DateTime LastActive { set; get; }
-        public ICollection<User> ?patients { get; set; }
+        public DateTime LastActive { set; get; } = DateTime.Now;
+        public ICollection<Patient> ?patients { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace GoldenMind
         public AppDBContext(DbContextOptions opt) : base(opt)
         {
         }
-        public DbSet<User> patiens { get; set; }
+        public DbSet<Patient> patiens { get; set; }
         public DbSet<CareGaver> careGavers { get; set; }
         public DbSet<Alarms> alarms { get; set; }
 

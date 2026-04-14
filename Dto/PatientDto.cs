@@ -1,6 +1,6 @@
 ﻿namespace GoldenMind.Dto
 {
-    public class UserDto
+    public class PatientDto
     {
         public int Id { get; set; } 
         public string Name { get; set; }

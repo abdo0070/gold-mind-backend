@@ -17,16 +17,16 @@ namespace GoldenMind.Controllers
     public class AuthController : ControllerBase
     {
         private AppDBContext _context;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<Patient> _userManager;
         private readonly TokenProvider _tokenProvider;
-        public AuthController(AppDBContext context, UserManager<User> userManager, TokenProvider tokenProvider)
+        public AuthController(AppDBContext context, UserManager<Patient> userManager, TokenProvider tokenProvider)
         {
             _userManager = userManager;
             _context = context;
             _tokenProvider = tokenProvider;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register(User user)
+        public async Task<IActionResult> Register(Patient user)
         {
             if (ModelState.IsValid)
             {
@@ -43,10 +43,10 @@ namespace GoldenMind.Controllers
             return BadRequest(ModelState);
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto authData)
+        public async Task<IActionResult> Login([FromBody] PatientDto authData)
         {
             // get the user from the DB
-            User userDB = await _context.patiens.Include(u => u.Email == authData.Email).FirstOrDefaultAsync();
+            Patient userDB = await _context.patiens.Include(u => u.Email == authData.Email).FirstOrDefaultAsync();
             if (userDB != null)
             {
                 // user claims

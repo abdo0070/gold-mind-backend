@@ -95,7 +95,7 @@
         }
       }
     },
-    "/{Id}": {
+    "/api/alarms/{Id}": {
       "get": {
         "tags": [
           "ALarm"
@@ -127,17 +127,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             }
           }
@@ -158,17 +158,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             }
           }
@@ -317,10 +317,10 @@
         }
       }
     },
-    "/api/users": {
+    "/api/patients": {
       "get": {
         "tags": [
-          "User"
+          "Patient"
         ],
         "responses": {
           "200": {
@@ -330,23 +330,23 @@
       },
       "post": {
         "tags": [
-          "User"
+          "Patient"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Patient"
               }
             }
           }
@@ -359,23 +359,23 @@
       },
       "put": {
         "tags": [
-          "User"
+          "Patient"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PatientDto"
               }
             }
           }
@@ -387,10 +387,10 @@
         }
       }
     },
-    "/api/users/{Id}": {
+    "/api/patients/{Id}": {
       "get": {
         "tags": [
-          "User"
+          "Patient"
         ],
         "parameters": [
           {
@@ -410,10 +410,10 @@
         }
       }
     },
-    "/api/users/id": {
+    "/api/patients/id": {
       "delete": {
         "tags": [
-          "User"
+          "Patient"
         ],
         "parameters": [
           {
@@ -467,7 +467,7 @@
             "format": "date-time"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/Patient"
           },
           "repeat": {
             "type": "boolean"
@@ -515,14 +515,14 @@
           "patients": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/Patient"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "User": {
+      "Patient": {
         "required": [
           "name"
         ],
@@ -552,10 +552,6 @@
             "type": "string",
             "nullable": true
           },
-          "education": {
-            "type": "string",
-            "nullable": true
-          },
           "age": {
             "type": "integer",
             "format": "int32"
@@ -581,7 +577,7 @@
         },
         "additionalProperties": false
       },
-      "UserDto": {
+      "PatientDto": {
         "type": "object",
         "properties": {
           "id": {

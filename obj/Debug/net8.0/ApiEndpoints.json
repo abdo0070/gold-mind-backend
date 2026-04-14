@@ -1,22 +1,6 @@
 [
   {
     "ContainingType": "GoldenMind.Controllers.ALarmController",
-    "Method": "GetSingleAlarm",
-    "RelativePath": "{Id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "GoldenMind.Controllers.ALarmController",
     "Method": "GetAllAlarms",
     "RelativePath": "api/alarms",
     "HttpMethod": "GET",
@@ -74,6 +58,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "GoldenMind.Controllers.ALarmController",
+    "Method": "GetSingleAlarm",
+    "RelativePath": "api/alarms/{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GoldenMind.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/caregaver/auth/login",
@@ -83,7 +83,7 @@
     "Parameters": [
       {
         "Name": "authData",
-        "Type": "GoldenMind.Dto.UserDto",
+        "Type": "GoldenMind.Dto.PatientDto",
         "IsRequired": true
       }
     ],
@@ -99,7 +99,7 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "GoldenMind.Models.User",
+        "Type": "GoldenMind.Models.Patient",
         "IsRequired": true
       }
     ],
@@ -196,9 +196,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.UserController",
+    "ContainingType": "GoldenMind.Controllers.PatientController",
     "Method": "Index",
-    "RelativePath": "api/users",
+    "RelativePath": "api/patients",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -206,41 +206,41 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.UserController",
+    "ContainingType": "GoldenMind.Controllers.PatientController",
     "Method": "Create",
-    "RelativePath": "api/users",
+    "RelativePath": "api/patients",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "newUser",
-        "Type": "GoldenMind.Models.User",
+        "Type": "GoldenMind.Models.Patient",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.UserController",
+    "ContainingType": "GoldenMind.Controllers.PatientController",
     "Method": "Update",
-    "RelativePath": "api/users",
+    "RelativePath": "api/patients",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "user",
-        "Type": "GoldenMind.Dto.UserDto",
+        "Type": "GoldenMind.Dto.PatientDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.UserController",
+    "ContainingType": "GoldenMind.Controllers.PatientController",
     "Method": "GetSingleUser",
-    "RelativePath": "api/users/{Id}",
+    "RelativePath": "api/patients/{Id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -254,9 +254,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "GoldenMind.Controllers.UserController",
+    "ContainingType": "GoldenMind.Controllers.PatientController",
     "Method": "Delete",
-    "RelativePath": "api/users/id",
+    "RelativePath": "api/patients/id",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
