@@ -32,13 +32,16 @@ namespace GoldenMind.Controllers
             return Ok(new
             {
                 data = alarmsDto,
-                msg = "Sucess"
+                msg = "Success"
             });
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetSingleAlarm(int Id)
         {
-            return Ok(Id);
+            var alram = await _context.alarms.FindAsync(Id);
+            if(alram != null)
+                return Ok(alram);
+            return NoContent(); 
         }
         [HttpPost]
         public async Task<IActionResult> CreateAlarm([FromBody] AlarmDto alarmDto)
