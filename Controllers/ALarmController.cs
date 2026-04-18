@@ -1,4 +1,5 @@
 ﻿using GoldenMind.Dto;
+using GoldenMind.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +47,20 @@ namespace GoldenMind.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAlarm([FromBody] AlarmDto alarmDto)
         {
-            return Ok();
+            var patient = await _context.patiens.FindAsync(alarmDto.UserId);
+
+            if(patient != null)
+            {
+                var newAlarm = new Alarms();
+                newAlarm.Patient = patient;
+                newAlarm.UserId = alarmDto.UserId;
+                newAlarm.Repeat = alarmDto.Repeat;
+                newAlarm.Discard = alarmDto.Discard;
+                newAlarm.DateTime = alarmDto.DateTime;
+                await _context.alarms.AddAsync(newAlarm);
+                return NoContent();
+            }
+            return BadRequest("InValid data");
         }
 
         [HttpPut]
