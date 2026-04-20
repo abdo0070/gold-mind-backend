@@ -66,12 +66,23 @@ namespace GoldenMind.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody]AlarmDto alarmsDto)
         {
+            var patient = await _context.patiens.FindAsync(alarmsDto.UserId);
+
+
             return NoContent();
         }
-        [HttpDelete]
+        [HttpDelete("Id")]
         public async Task<IActionResult> Delete(int Id)
         {
-            return NoContent();
+            var alarm = await _context.alarms.FindAsync(Id);
+            if(alarm != null)
+            {
+                _context.alarms.Remove(alarm);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+
+            return NotFound("alarm does not exist");
         }
     }
 }
