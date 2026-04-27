@@ -17,6 +17,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DB_URI")));
+
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(
+policy => 
+policy.AllowAnyHeader()
+.AllowAnyOrigin()
+.AllowAnyMethod()
+)); 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
