@@ -22,7 +22,7 @@ namespace GoldenMind.Services
             var jwtSecurityToken = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
-                claims: null,
+                claims: claims,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials : signingCredentials
                 );

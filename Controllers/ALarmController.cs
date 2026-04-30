@@ -67,7 +67,7 @@ namespace GoldenMind.Controllers
         public async Task<IActionResult> Update([FromBody]AlarmDto alarmsDto)
         {
             var patient = await _context.patiens.FindAsync(alarmsDto.UserId);
-
+            
 
             return NoContent();
         }
